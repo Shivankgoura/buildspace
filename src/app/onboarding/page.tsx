@@ -66,11 +66,12 @@ export default function OnboardingPage() {
       return;
     }
 
-    // Check username uniqueness
+    // Check username uniqueness (exclude own profile for retry attempts)
     const { data: existing } = await supabase
       .from("profiles")
       .select("id")
       .eq("username", username.toLowerCase().trim())
+      .neq("user_id", user.id)
       .single();
 
     if (existing) {
@@ -271,7 +272,17 @@ export default function OnboardingPage() {
               </Button>
 
               {step < steps.length - 1 ? (
-                <Button onClick={() => setStep((s) => s + 1)} className="gap-1">
+                <Button
+                  onClick={() => {
+                    if (step === 0 && (!fullName.trim() || !username.trim())) {
+                      setError("Name and username are required");
+                      return;
+                    }
+                    setError("");
+                    setStep((s) => s + 1);
+                  }}
+                  className="gap-1"
+                >
                   Next
                   <ArrowRight className="h-4 w-4" />
                 </Button>

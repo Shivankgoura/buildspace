@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { Plus, FolderKanban } from "lucide-react";
@@ -61,7 +62,9 @@ export default async function ProjectsPage({
         </Link>
       </div>
 
-      <ProjectFilters />
+      <Suspense fallback={null}>
+        <ProjectFilters />
+      </Suspense>
 
       {projectsWithCounts.length > 0 ? (
         <div className="grid sm:grid-cols-2 gap-4">

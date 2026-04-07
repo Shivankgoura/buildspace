@@ -11,6 +11,7 @@ import {
   LogOut,
   Menu,
   X,
+  Settings,
 } from "lucide-react";
 import { LogoBrand } from "@/components/ui/logo";
 import { Button } from "@/components/ui/button";
@@ -112,6 +113,15 @@ export function Navbar({ profile }: NavbarProps) {
                         <User className="h-4 w-4" />
                         View Profile
                       </Link>
+                      <Link
+                        href="/settings"
+                        className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-accent transition-colors"
+                        onClick={() => setUserMenuOpen(false)}
+                      >
+                        <Settings className="h-4 w-4" />
+                        Settings
+                      </Link>
+                      <div className="border-t border-border my-1" />
                       <button
                         onClick={handleSignOut}
                         className="flex w-full items-center gap-2 px-4 py-2 text-sm hover:bg-accent transition-colors text-red-600 cursor-pointer"
@@ -169,6 +179,15 @@ export function Navbar({ profile }: NavbarProps) {
                 </Link>
               );
             })}
+            <Link href="/settings" onClick={() => setMobileMenuOpen(false)}>
+              <Button
+                variant={pathname.startsWith("/settings") ? "secondary" : "ghost"}
+                className="w-full justify-start gap-2 min-h-[44px] px-4"
+              >
+                <Settings className="h-4 w-4" />
+                Settings
+              </Button>
+            </Link>
           </nav>
         </div>
       )}

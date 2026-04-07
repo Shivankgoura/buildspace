@@ -1,9 +1,13 @@
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar } from "@/components/ui/avatar";
 import { Github, Linkedin, Globe, Calendar } from "lucide-react";
+import { LogoBrand } from "@/components/ui/logo";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { ProfileShareButton } from "./share-button";
 import type { Metadata } from "next";
 
@@ -53,6 +57,21 @@ export default async function ProfilePage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Top nav bar for profile page */}
+      <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-xl">
+        <div className="mx-auto flex h-14 max-w-3xl items-center justify-between px-4 sm:px-6 lg:px-8">
+          <Link href="/">
+            <LogoBrand size="sm" />
+          </Link>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Link href="/dashboard">
+              <Button size="sm" variant="outline">Open App</Button>
+            </Link>
+          </div>
+        </div>
+      </header>
+
       <div className="mx-auto max-w-3xl p-4 sm:p-6 lg:p-8 py-12">
         <Card>
           <CardContent className="p-6 sm:p-8">
@@ -138,7 +157,7 @@ export default async function ProfilePage({ params }: Props) {
                 <h2 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wider">Projects</h2>
                 <div className="space-y-2">
                   {projects.map((project) => (
-                    <a
+                    <Link
                       key={project.id}
                       href={`/projects/${project.id}`}
                       className="flex items-center justify-between p-3 rounded-lg border border-border hover:bg-accent transition-colors"
@@ -152,7 +171,7 @@ export default async function ProfilePage({ params }: Props) {
                         </div>
                       </div>
                       <Badge variant="outline" className="text-xs capitalize">{project.role}</Badge>
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </div>

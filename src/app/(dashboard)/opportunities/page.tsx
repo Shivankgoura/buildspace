@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { Plus, Megaphone } from "lucide-react";
@@ -58,7 +59,9 @@ export default async function OpportunitiesPage({
         </Link>
       </div>
 
-      <OpportunityFilters />
+      <Suspense fallback={null}>
+        <OpportunityFilters />
+      </Suspense>
 
       {opportunitiesWithCounts.length > 0 ? (
         <div className="grid sm:grid-cols-2 gap-4">
